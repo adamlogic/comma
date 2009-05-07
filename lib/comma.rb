@@ -12,6 +12,20 @@ class Array
       end
     end
   end
+
+  def to_html_table(style = :default)
+    rows = []
+    rows << first.to_comma_headers(style).to_html_table_row('th')
+    each do |object|
+      rows << object.to_comma(style).to_html_table_row
+    end
+    "<table cellspacing=\"0\">#{rows.join}</table>"
+  end
+
+  def to_html_table_row(cell_tag = 'td')
+    cells = map { |val| "<#{cell_tag}>#{val}</#{cell_tag}>" }
+    "<tr>#{cells.join}</tr>"
+  end  
 end
 
 class Object
